@@ -1,0 +1,38 @@
+package AlphabetPrinter.java;
+
+import java.util.Random;
+
+public class AlphabetPrinter {
+
+    public static void main(String[] args) {
+        Thread thread = new Thread(() -> {
+            Random random = new Random();
+            
+            for (int i = 0; i < 26; i++) {
+                // Calculate random delay between 100ms to 1000ms
+                int delay = 100 + random.nextInt(900);
+                
+                // Generate and print the next alphabet
+                char randomChar = (char) ('A' + i); // Sequential A-Z
+                System.out.print(randomChar + " ");
+
+                // Sleep for random delay
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    System.err.println("Thread interrupted: " + e.getMessage());
+                }
+            }
+        });
+
+        // Start the thread
+        thread.start();
+
+        // Wait for the thread to complete execution
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            System.err.println("Main thread interrupted: " + e.getMessage());
+        }
+    }
+}
